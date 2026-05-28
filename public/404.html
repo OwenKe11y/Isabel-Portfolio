@@ -1,0 +1,12 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <script>
+      // Redirect GitHub Pages 404s back to index.html so React Router handles routing
+      const path = window.location.pathname.replace('/Isabel-Portfolio', '') || '/';
+      sessionStorage.setItem('redirect', path + window.location.search);
+      window.location.replace('/Isabel-Portfolio/');
+    </script>
+  </head>
+</html>

@@ -8,7 +8,7 @@ import { ExperimentalWorkPage } from './pages/ExperimentalWorkPage';
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/Isabel-Portfolio/">
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/case-studies/burren-flower-app" element={<BurrenFlowerCaseStudy />} />
