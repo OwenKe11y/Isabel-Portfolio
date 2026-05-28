@@ -1,0 +1,179 @@
+import { motion } from 'motion/react';
+import { Navigation } from '../components/Navigation';
+import { Footer } from '../components/Footer';
+import { ImageWithFallback } from '../components/figma/ImageWithFallback';
+import { Sparkles } from 'lucide-react';
+
+interface CreativeProject {
+  title: string;
+  category: string;
+  color: string;
+  size?: 'small' | 'medium' | 'large';
+  image?: string;
+  description?: string;
+}
+
+const creativeProjects: CreativeProject[] = [
+  {
+    title: 'Book Cover Concepts',
+    category: 'Editorial Design',
+    color: '#D4A5A5',
+    size: 'large',
+    image: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=800&q=80',
+    description: 'Exploring typography, composition, and visual storytelling through book cover design experiments.'
+  },
+  {
+    title: 'Social Media Design',
+    category: 'Digital Content',
+    color: '#B4A5C7',
+    size: 'medium',
+    description: 'Creating engaging visual content for social platforms with focus on brand consistency and user engagement.'
+  },
+  {
+    title: 'Podcast Cover Design',
+    category: 'Branding',
+    color: '#C9B8A0',
+    size: 'medium',
+    image: 'https://images.unsplash.com/photo-1589903308904-1010c2294adc?w=800&q=80',
+    description: 'Designing memorable podcast artwork that captures show identity and attracts listeners.'
+  },
+  {
+    title: 'Typography Explorations',
+    category: 'Type Design',
+    color: '#D9B5A3',
+    size: 'small',
+    description: 'Experimenting with letterforms, hierarchy, and typographic systems for various contexts.'
+  },
+  {
+    title: 'Accessibility Experiments',
+    category: 'UX Research',
+    color: '#C89B88',
+    size: 'small',
+    description: 'Testing inclusive design patterns and accessibility features for diverse user needs.'
+  },
+  {
+    title: 'UI Concept Work',
+    category: 'Interface Design',
+    color: '#D4C5A0',
+    size: 'medium',
+    description: 'Exploring new interface patterns, micro-interactions, and visual design approaches.'
+  }
+];
+
+export function ExperimentalWorkPage() {
+  return (
+    <div className="min-h-screen bg-background">
+      <Navigation />
+
+      {/* Hero Section */}
+      <section className="pt-32 pb-20 px-6 md:px-12 lg:px-24">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="space-y-6"
+          >
+            <div className="flex items-center gap-3">
+              <Sparkles className="w-10 h-10 text-primary" />
+              <h1 className="text-5xl md:text-7xl font-medium text-foreground">
+                Experimental Work
+              </h1>
+            </div>
+            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl">
+              Creative explorations, side projects, and visual experiments that push boundaries
+              and explore new ideas beyond traditional UX case studies.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Projects Grid */}
+      <section className="px-6 md:px-12 lg:px-24 pb-32">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-auto">
+            {creativeProjects.map((project, index) => {
+              const sizeClasses = {
+                small: 'md:row-span-1',
+                medium: 'md:row-span-2',
+                large: 'md:row-span-3 lg:col-span-2'
+              };
+
+              return (
+                <motion.article
+                  key={project.title}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-50px' }}
+                  transition={{ delay: index * 0.1, duration: 0.6 }}
+                  className={`group relative overflow-hidden rounded-3xl ${sizeClasses[project.size || 'medium']}`}
+                >
+                  <div
+                    className="relative h-full min-h-[280px] border border-border hover:border-opacity-50 transition-all duration-500 rounded-3xl overflow-hidden"
+                    style={{ borderColor: project.color + '40' }}
+                  >
+                    {/* Background */}
+                    {project.image ? (
+                      <>
+                        <ImageWithFallback
+                          src={project.image}
+                          alt={project.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+                      </>
+                    ) : (
+                      <div
+                        className="absolute inset-0 opacity-20 group-hover:opacity-30 transition-opacity duration-500"
+                        style={{ backgroundColor: project.color }}
+                      />
+                    )}
+
+                    {/* Content */}
+                    <div className="absolute inset-0 p-8 flex flex-col justify-end">
+                      <div
+                        className="text-xs tracking-[0.2em] uppercase mb-2 font-medium"
+                        style={{ color: project.color }}
+                      >
+                        {project.category}
+                      </div>
+                      <h3 className="text-2xl md:text-3xl font-medium text-foreground group-hover:text-primary transition-colors duration-300 mb-3">
+                        {project.title}
+                      </h3>
+                      {project.description && (
+                        <p className="text-sm text-muted-foreground leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          {project.description}
+                        </p>
+                      )}
+
+                      {/* Decorative Element */}
+                      <div
+                        className="w-12 h-1 mt-4 rounded-full group-hover:w-20 transition-all duration-300"
+                        style={{ backgroundColor: project.color }}
+                      />
+                    </div>
+                  </div>
+                </motion.article>
+              );
+            })}
+          </div>
+
+          {/* Footer Note */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.6, duration: 0.6 }}
+            className="text-center mt-20"
+          >
+            <p className="text-muted-foreground italic text-lg">
+              Always exploring new ways to blend creativity with user-centered design principles.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      <Footer />
+    </div>
+  );
+}
